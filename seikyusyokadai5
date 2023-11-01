@@ -1,0 +1,50 @@
+import openpyxl
+
+workbook = openpyxl.Workbook()
+
+sheet = workbook.active
+
+sheet['B2'].value = "請求書"
+sheet.insert_rows(3,1)
+sheet['B4'].value  = "株式会社ABC"
+sheet['B5'].value  = "〒101-0022 東京都千代田区神田練塀町300"
+sheet['B6'].value  = "TEL:03-1234-5678 FAX:03-1234-5678"
+sheet['B7'].value  = "担当者名:鈴木一郎 様"
+sheet['F4'].value  = "No."
+sheet['G4'].value  = "0001"
+sheet['F5'].value  = "日付"
+
+sheet['G5'].value = '=TEXT(TODAY(), "yyyy/mm/dd")'
+worksheet.insert_rows(8,2)
+
+header = ['','商品名', '数量', '単価', '金額']
+sheet.append([])
+sheet.append([])
+sheet.append(header)
+
+data = [
+    ['','商品A',2,10000],
+    ['','商品B',1,15000],
+ ]
+
+for row in data:
+    sheet.append(row)
+
+sheet['E11'].value = "=C11*D11"
+sheet['E12'].value = "=C12*D12"
+sheet['E13'].value = "=E11+E12"
+
+sheet['B15'].value = "小計"
+sheet['B16'].value = "消費税"
+sheet['B17'].value = "合計"
+
+sheet['E15'].value = "=E13"
+sheet['E16'].value = "=E13/10"
+sheet['E17'].value = "=E15+E16"
+
+from datetime import datetime
+today = datetime.today()
+
+backup_filename = f"請求書_{today.strftime('%Y%m%d')}.xlsx"
+
+workbook.save(backup_filename)
